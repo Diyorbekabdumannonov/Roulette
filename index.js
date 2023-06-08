@@ -1,29 +1,33 @@
 // CUSTOM OPTIONS
 let options = [
-  "Lose",
-  "$1000000",
-  "Lose",
-  "$350",
-  "$5",
-  "$99",
-  "1 Burger",
-  " 1 Glace",
+  { value: "burger", type: "img" },
+  { value: "glace", type: "img" },
+  { value: "burger", type: "img" },
+  { value: "glace", type: "img" },
+  { value: "burger", type: "img" },
+  { value: "glace", type: "img" },
+  { value: "burger", type: "img" },
+  { value: "glace", type: "img" },
 ];
 
+// CUSTOM COLORS
 const colors = [
   ["#fff", "#44201f"],
   ["#44201f", "#fff"],
   ["black", "#fff"],
+  ["#000f0f", "#fff"],
+  ["#ffff0f", "#fff"],
+  ["#ff0fff", "#fff"],
+  ["#1220ce", "#fff"],
+  ["#9999ce", "#fff"],
 ];
 
 let startAngle = 0;
 let arc = Math.PI / (options.length / 2);
 let spinTimeout = null;
-
 let spinArcStart = 10;
 let spinTime = 0;
 let spinTimeTotal = 0;
-
 let ctx;
 const spinBtn = document.getElementById("spin");
 const marker = document.querySelector(".marker");
@@ -34,12 +38,6 @@ spinBtn.addEventListener("click", spin);
 
 function drawRouletteWheel() {
   const canvas = document.getElementById("canvas");
-  window.devicePixelRatio = 2;
-  const scale = window.devicePixelRatio;
-  let size = 250;
-  canvas.width = Math.floor(size * scale);
-  canvas.height = Math.floor(size * scale);
-
   if (canvas.getContext) {
     const outsideRadius = 200;
     const textRadius = 160;
@@ -49,6 +47,7 @@ function drawRouletteWheel() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (var i = 0; i < options.length; i++) {
+      // Drawing piece of wheel
       const angle = startAngle + i * arc;
       const currentColor = i % colors.length;
       ctx.fillStyle = colors[currentColor][0];
@@ -64,16 +63,24 @@ function drawRouletteWheel() {
         255 + Math.sin(angle + arc / 2) * textRadius
       );
       ctx.rotate(angle + arc / 2 - 0.1);
-      const text = options[i];
+      const item = options[i];
 
-      ctx.font = "20px custom";
-      ctx.scale(scale / 1.5, scale / 1.5);
-      ctx.lineWidth = 1;
-      ctx.textAlign = "center";
-      ctx.strokeStyle = colors[currentColor][1];
-      ctx.fillStyle = colors[currentColor][1];
-      ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
-      ctx.restore();
+      // Adding wheel content
+      if (item.type == "img") {
+        const img = document.querySelector(`.${item.value}`);
+        ctx.drawImage(img, -50, -30, 40, 40);
+        ctx.restore();
+      }
+      // else {
+      //   ctx.font = "20px custom";
+      //   ctx.scale(scale / 1.5, scale / 1.5);
+      //   ctx.lineWidth = 1;
+      //   ctx.textAlign = "center";
+      //   ctx.strokeStyle = colors[currentColor][1];
+      //   ctx.fillStyle = colors[currentColor][1];
+      //   ctx.fillText(text, -ctx.measureText(item.value).width / 2, 0);
+      //   ctx.restore();
+      // }
     }
   }
 }
@@ -103,8 +110,6 @@ function rotateWheel() {
   options.map((el, index) => {
     const avrg = 360 / options.length;
 
-    console.log(degrees);
-
     if (avrg * (index + 1) == Math.round(degrees)) {
       marker.classList.add("bounce");
       setTimeout(() => {
@@ -124,8 +129,8 @@ function stopRotateWheel() {
   const arcd = (arc * 180) / Math.PI;
   const index = Math.floor((360 - (degrees % 360)) / arcd);
   ctx.save();
-  const text = options[index];
-  alert(text);
+  const text = options[index].value;
+  alert(`🏆🏆🏆 Your prize is ${text}.  🏆🏆🏆`);
   spinBtn.disabled = false;
   ctx.restore();
 }

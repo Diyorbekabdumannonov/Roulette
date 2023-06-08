@@ -82,6 +82,12 @@ canvas {
     animation: bounce 0.6s;
 }
 
+.assets img {
+    width: 40px;
+    height: 40px;
+    display: none;
+}
+
 @keyframes bounce {
     0% {
         transform: rotate(360deg)
