@@ -98,8 +98,26 @@ function rotateWheel() {
   var spinAngle =
     spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
   startAngle += (spinAngle * Math.PI) / 180;
+
+  const marker = document.querySelector(".arrow");
+
+  var degrees = (startAngle * 180) / Math.PI;
+  var arcd = (arc * 180) / Math.PI;
+  var index = Math.floor((360 - (degrees % 360)) / arcd);
+
+  [1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
+    const avrg = 360 / options.length;
+
+    if (Math.abs(avrg * (index + 1) - Math.round(degrees)) < 10) {
+      marker.classList.add("bounce");
+      setTimeout(() => {
+        marker.classList.remove("bounce");
+      }, 300);
+    }
+  });
+
   drawRouletteWheel();
-  spinTimeout = setTimeout("rotateWheel()", 30);
+  spinTimeout = setTimeout("rotateWheel()", 90);
 }
 
 function stopRotateWheel() {

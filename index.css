@@ -126,3 +126,29 @@ canvas {
     height: 80%;
     z-index: 1;
 }
+
+.bounce {
+    animation: bounce 0.9s;
+}
+
+@keyframes bounce {
+    0% {
+        transform: rotate(345deg)
+    }
+
+    50% {
+        transform: rotate(330deg)
+    }
+
+    51% {
+        transform: rotate(360deg)
+    }
+
+    75% {
+        transform: rotate(360deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
