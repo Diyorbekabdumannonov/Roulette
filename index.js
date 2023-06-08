@@ -1,4 +1,13 @@
-var options = ["Lose", "$1000000", "Lose", "$350", "$5", "$99"];
+var options = [
+  "Lose",
+  "$1000000",
+  "Lose",
+  "$350",
+  "$5",
+  "$99",
+  "1 Burger",
+  " 1 Glace",
+];
 
 var startAngle = 0;
 var arc = Math.PI / (options.length / 2);
@@ -14,17 +23,17 @@ document.getElementById("spin").addEventListener("click", spin);
 
 function getColor(item) {
   if (item % 2) {
-    return "#44201f";
-  } else {
     return "#fff";
+  } else {
+    return "#44201f";
   }
 }
 
 function getFontColor(item) {
   if (item % 2) {
-    return "#fff";
-  } else {
     return "#44201f";
+  } else {
+    return "#fff";
   }
 }
 
@@ -38,18 +47,16 @@ function drawRouletteWheel() {
     ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.lineWidth = 4;
     for (var i = 0; i < options.length; i++) {
       var angle = startAngle + i * arc;
-      //ctx.fillStyle = colors[i];
       ctx.fillStyle = getColor(i);
-
+      ctx.strokeStyle = "#44201f";
+      ctx.lineWidth = 6;
       ctx.beginPath();
       ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
       ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
       ctx.stroke();
       ctx.fill();
-
       ctx.save();
       ctx.shadowOffsetX = -1;
       ctx.shadowOffsetY = -1;
@@ -57,33 +64,21 @@ function drawRouletteWheel() {
       ctx.shadowColor = "rgb(220,220,220)";
       ctx.fillStyle = "black";
       ctx.translate(
-        250 + Math.cos(angle + arc / 2) * textRadius,
-        250 + Math.sin(angle + arc / 2) * textRadius
+        255 + Math.cos(angle + arc / 2) * textRadius,
+        255 + Math.sin(angle + arc / 2) * textRadius
       );
-      ctx.rotate(angle + arc / 2 + Math.PI / 2);
+      ctx.rotate(angle + arc / 2 - 0.1);
       var text = options[i];
 
-      ctx.font = "16px Brown";
+      ctx.font = "20px sans-serif";
       ctx.lineWidth = 1;
+      ctx.textAlign = "center";
       ctx.strokeStyle = getFontColor(i);
       ctx.fillStyle = getFontColor(i);
-      ctx.strokeText(text, -ctx.measureText(text).width / 2, 0);
+      ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
 
       ctx.restore();
     }
-
-    //Arrow
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
-    ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
-    ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
-    ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
-    ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
-    ctx.fill();
   }
 }
 
@@ -109,11 +104,10 @@ function rotateWheel() {
 
 function stopRotateWheel() {
   clearTimeout(spinTimeout);
-  var degrees = (startAngle * 180) / Math.PI + 90;
+  var degrees = (startAngle * 180) / Math.PI;
   var arcd = (arc * 180) / Math.PI;
   var index = Math.floor((360 - (degrees % 360)) / arcd);
   ctx.save();
-  ctx.font = "bold 30px Helvetica, Arial";
   var text = options[index];
   alert(text);
   ctx.restore();

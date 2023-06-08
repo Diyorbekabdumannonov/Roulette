@@ -12,10 +12,63 @@
 </head>
 
 <body>
-    <!-- <img src="./assets/logo.png" alt="logo">
-    <img src="./assets/gift.svg" alt=""> -->
-    <input type="button" value="spin" style="float:left;" id='spin' />
-    <canvas id="canvas" width="500" height="500"></canvas>
+    <header>
+        <img src="./assets/logo.png" alt="logo" class="logo">
+        <h2 class="title">Spin the wheel <span><br> and discover your gift</span></h2>
+    </header>
+    <div class="app">
+        <div class="line">
+            <div></div>
+        </div>
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <img src="./assets/arrow.svg" alt="arrow" class="arrow">
+        <img src="./assets/gift2.svg" alt="prize" class="prize1">
+        <img src="./assets/gift.svg" alt="prize" class="prize2">
+        <svg width="440" height="440" class="shadow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1271.56 1309.34">
+            <defs>
+                <style>
+                    .cls-wheel-reflection-1 {
+                        isolation: isolate;
+                    }
+
+                    .cls-wheel-reflection-2 {
+                        fill: url(#linear-gradient);
+                    }
+
+                    .cls-wheel-reflection-3 {
+                        fill: url(#linear-gradient-2);
+                    }
+                </style>
+                <linearGradient id="linear-gradient" x1="8866.74" y1="-4261.47" x2="8980.22" y2="-4130.19"
+                    gradientTransform="matrix(-0.57, 0.82, 0.82, 0.57, 9140.4, -4671.89)"
+                    gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#fff" stop-opacity="0.6"></stop>
+                    <stop offset="1" stop-color="#fff" stop-opacity="0.3"></stop>
+                </linearGradient>
+                <linearGradient id="linear-gradient-2" x1="7644.92" y1="-3780.66" x2="7837.76" y2="-3742.73"
+                    gradientTransform="matrix(-0.46, 0.89, 0.89, 0.46, 7997.45, -4685.56)"
+                    xlink:href="#linear-gradient">
+                </linearGradient>
+            </defs>
+            <g class="cls-wheel-reflection-1">
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="REFLET">
+                        <path class="cls-wheel-reflection-2"
+                            d="M233.25,415.47c59.67,36.14,127.36-83.9,354.56-100.81,271.57-20.2,408.65,109,436.86,31.79,23.34-63.84-195-262.29-465.42-216.34C353.47,165.08,136.79,357.07,233.25,415.47Z">
+                        </path>
+                        <path class="cls-wheel-reflection-3"
+                            d="M1016.1,422.51c0-38.95,43.19-70.26,73.39-37.14s55.53,103,25.7,120.45S1016.05,484.4,1016.1,422.51Z">
+                        </path>
+                        <rect fill="transparent" x="1208.23" width="63.33" height="82.08"></rect>
+                        <rect fill="transparent" y="1222.15" width="87.19" height="87.19"></rect>
+                    </g>
+                </g>
+            </g>
+        </svg>
+        <div class="btnContainer">
+            <button type="button" id='spin'>Spin the wheel</button>
+        </div>
+    </div>
 </body>
 
 </html>
