@@ -36,6 +36,8 @@ header {
     overflow: hidden;
     position: relative;
     padding-top: 30px;
+    max-width: 375px;
+    margin: auto;
 }
 
 canvas {
