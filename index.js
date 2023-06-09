@@ -1,20 +1,21 @@
-// CUSTOM OPTIONS
+// CUSTOM OPTION
 let options = [
-  { value: "burger", type: "img" },
-  { value: "glace", type: "img" },
-  { value: "burger", type: "img" },
-  { value: "glace", type: "img" },
-  { value: "burger", type: "img" },
-  { value: "glace", type: "img" },
-  { value: "burger", type: "img" },
-  { value: "glace", type: "img" },
+  { value: "a", type: "img" },
+  { value: "c", type: "img" },
+  { value: "e", type: "img" },
+  { value: "b", type: "img" },
+  { value: "d", type: "img" },
+  { value: "c", type: "img" },
+  { value: "e", type: "img" },
+  { value: "c", type: "img" },
 ];
 
 // CUSTOM COLORS
 const colors = [
-  ["#fff", "#44201f"],
-  ["#44201f", "#fff"],
-  ["black", "#fff"],
+  ["#8939d6", "#fff"],
+  ["#017ec1", "#fff"],
+  ["#19add9", "#fff"],
+  ["#1b4db4", "#fff"],
 ];
 
 let startAngle = 0;
@@ -24,10 +25,15 @@ let spinArcStart = 10;
 let spinTime = 0;
 let spinTimeTotal = 0;
 let ctx;
+let loading = true;
 const spinBtn = document.getElementById("spin");
 const marker = document.querySelector(".marker");
 
 spinBtn.addEventListener("click", spin);
+
+window.onload = () => {
+  drawRouletteWheel();
+};
 
 // Drawing Wheel
 
@@ -37,10 +43,8 @@ function drawRouletteWheel() {
     const outsideRadius = 200;
     const textRadius = 160;
     const insideRadius = 0;
-
     ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     for (var i = 0; i < options.length; i++) {
       // Drawing piece of wheel
       const angle = startAngle + i * arc;
@@ -57,26 +61,29 @@ function drawRouletteWheel() {
         255 + Math.cos(angle + arc / 2) * textRadius,
         255 + Math.sin(angle + arc / 2) * textRadius
       );
-      ctx.rotate(angle + arc / 2 - 0.1);
+      ctx.rotate(angle + arc / 2 + 1.6);
       const item = options[i];
 
       // Adding wheel content
+      const img = document.querySelector(`.${item.value}`);
       if (item.type == "img") {
-        const img = document.querySelector(`.${item.value}`);
-        ctx.drawImage(img, -50, -30, 40, 40);
+        ctx.drawImage(img, -18, 0, 50, 50);
+        ctx.restore();
+      } else {
+        ctx.beginPath();
+        ctx.font = "20px custom";
+        ctx.lineWidth = 1;
+        const text = options[i].value;
+        ctx.textAlign = "center";
+        ctx.strokeStyle = colors[currentColor][1];
+        ctx.fillStyle = colors[currentColor][1];
+        ctx.fillText(text, -ctx.measureText(item.value).width / 2, 0);
         ctx.restore();
       }
-      // else {
-      //   ctx.font = "20px custom";
-      //   ctx.scale(scale / 1.5, scale / 1.5);
-      //   ctx.lineWidth = 1;
-      //   ctx.textAlign = "center";
-      //   ctx.strokeStyle = colors[currentColor][1];
-      //   ctx.fillStyle = colors[currentColor][1];
-      //   ctx.fillText(text, -ctx.measureText(item.value).width / 2, 0);
-      //   ctx.restore();
-      // }
     }
+    const img = document.querySelector(`.center`);
+    ctx.drawImage(img, canvas.width / 2 - 18, canvas.height / 2 - 30);
+    ctx.restore();
   }
 }
 
@@ -97,22 +104,9 @@ function rotateWheel() {
     stopRotateWheel();
     return;
   }
-  const spinAngle =
+  var spinAngle =
     spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
   startAngle += (spinAngle * Math.PI) / 180;
-  const degrees = ((startAngle * 180) / Math.PI) % 360;
-
-  options.map((el, index) => {
-    const avrg = 360 / options.length;
-
-    if (avrg * (index + 1) == Math.round(degrees)) {
-      marker.classList.add("bounce");
-      setTimeout(() => {
-        marker.classList.remove("bounce");
-      }, 100);
-    }
-  });
-
   drawRouletteWheel();
   spinTimeout = setTimeout("rotateWheel()", 10);
 }
@@ -120,7 +114,7 @@ function rotateWheel() {
 // Stop Wheel
 function stopRotateWheel() {
   clearTimeout(spinTimeout);
-  const degrees = (startAngle * 180) / Math.PI;
+  const degrees = (startAngle * 180) / Math.PI + 90;
   const arcd = (arc * 180) / Math.PI;
   const index = Math.floor((360 - (degrees % 360)) / arcd);
   ctx.save();
@@ -136,5 +130,3 @@ function easeOut(t, b, c, d) {
   const tc = ts * t;
   return b + c * (tc + -3 * ts + 3 * t);
 }
-
-drawRouletteWheel();
