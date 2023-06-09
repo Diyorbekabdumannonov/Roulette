@@ -81,8 +81,6 @@ function drawRouletteWheel() {
         ctx.restore();
       }
     }
-    const img = document.querySelector(`.center`);
-    ctx.drawImage(img, canvas.width / 2 - 18, canvas.height / 2 - 30);
     ctx.restore();
   }
 }
@@ -107,6 +105,18 @@ function rotateWheel() {
   var spinAngle =
     spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
   startAngle += (spinAngle * Math.PI) / 180;
+
+  const degrees = ((startAngle * 180) / Math.PI) % 360;
+
+  options.map((el, index) => {
+    const avrg = 360 / options.length;
+    if (Math.abs(avrg * (index + 1) - Math.round(degrees)) < 10) {
+      marker.classList.add("bounce");
+      setTimeout(() => {
+        marker.classList.remove("bounce");
+      }, 200);
+    }
+  });
   drawRouletteWheel();
   spinTimeout = setTimeout("rotateWheel()", 10);
 }
