@@ -15,11 +15,6 @@ const colors = [
   ["#fff", "#44201f"],
   ["#44201f", "#fff"],
   ["black", "#fff"],
-  ["#000f0f", "#fff"],
-  ["#ffff0f", "#fff"],
-  ["#ff0fff", "#fff"],
-  ["#1220ce", "#fff"],
-  ["#9999ce", "#fff"],
 ];
 
 let startAngle = 0;
